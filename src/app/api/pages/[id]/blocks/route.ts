@@ -1,11 +1,15 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { z } from "zod";
+import { requireAdmin } from "@/lib/require-admin";
 import { getDefinition } from "@/lib/blocks/registry";
 
 type Params = { params: Promise<{ id: string }> };
 
 export async function GET(_req: NextRequest, { params }: Params) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   const { id } = await params;
   const { isSupabaseAdminConfigured, supabaseAdmin } = await import("@/lib/supabase-admin");
 
@@ -59,6 +63,9 @@ const blockPatchSchema = z.discriminatedUnion("op", [
 ]);
 
 export async function PATCH(req: NextRequest, { params }: Params) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   const { id: pageId } = await params;
   const { isSupabaseAdminConfigured, supabaseAdmin } = await import("@/lib/supabase-admin");
   if (!isSupabaseAdminConfigured || !supabaseAdmin) {

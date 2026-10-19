@@ -1,13 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type TocItem = { id: string; label: string };
 
+/** After an anchor jump, move focus to the section heading so keyboard and screen-reader users land there. */
+function focusSectionHeading(id: string) {
+  requestAnimationFrame(() => {
+    const heading = document.getElementById(id)?.querySelector<HTMLElement>("h2");
+    if (!heading) return;
+    heading.tabIndex = -1;
+    heading.focus({ preventScroll: true });
+  });
+}
+
 export function StickyToc({ items }: { items: TocItem[] }) {
   const [active, setActive] = useState<string>(items[0]?.id ?? "");
   const [progress, setProgress] = useState(0);
+  const mobileRef = useRef<HTMLDetailsElement>(null);
+
+  const onLinkClick = (id: string) => {
+    setActive(id);
+    if (mobileRef.current) mobileRef.current.open = false;
+    focusSectionHeading(id);
+  };
+  const current = items.find((i) => i.id === active)?.label ?? items[0]?.label ?? "";
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -50,6 +69,36 @@ export function StickyToc({ items }: { items: TocItem[] }) {
         />
       </div>
 
+      {/* Below xl: sticky collapsed list under the fixed header (h-16). */}
+      <nav aria-label="Case study sections" className="sticky top-16 z-20 -mx-4 sm:-mx-6 lg:-mx-8 xl:hidden">
+        <details ref={mobileRef} className="group border-b border-hairline/10 bg-background/90 backdrop-blur-xl">
+          <summary className="focus-ring flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 text-sm sm:px-6 lg:px-8 font-medium [&::-webkit-details-marker]:hidden">
+            <span className="min-w-0 truncate">
+              <span className="text-muted-foreground">On this page: </span>
+              {current}
+            </span>
+            <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180 motion-reduce:transition-none" aria-hidden="true" />
+          </summary>
+          <ul className="absolute inset-x-0 top-full max-h-[70vh] overflow-y-auto border-b border-hairline/10 bg-background px-2 py-2 shadow-lg">
+            {items.map((item) => (
+              <li key={item.id}>
+                <a
+                  href={`#${item.id}`}
+                  onClick={() => onLinkClick(item.id)}
+                  aria-current={active === item.id ? "location" : undefined}
+                  className={cn(
+                    "focus-ring flex min-h-11 items-center rounded-md px-3 text-sm",
+                    active === item.id ? "font-medium text-foreground" : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      </nav>
+
       <nav
         aria-label="Case study sections"
         className="hidden xl:block"
@@ -62,6 +111,8 @@ export function StickyToc({ items }: { items: TocItem[] }) {
             <li key={item.id}>
               <a
                 href={`#${item.id}`}
+                onClick={() => onLinkClick(item.id)}
+                aria-current={active === item.id ? "location" : undefined}
                 className={cn(
                   "focus-ring group flex items-center gap-3 rounded-md py-2 pl-3 pr-2 text-sm transition",
                   active === item.id
@@ -75,7 +126,7 @@ export function StickyToc({ items }: { items: TocItem[] }) {
                     "h-px w-4 shrink-0 transition-all duration-300",
                     active === item.id
                       ? "w-8 bg-primary"
-                      : "bg-white/15 group-hover:bg-white/40"
+                      : "bg-hairline/25 group-hover:bg-hairline/50"
                   )}
                 />
                 {item.label}

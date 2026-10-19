@@ -47,6 +47,13 @@ export function BlockCanvas({ page }: Props) {
     return () => window.removeEventListener("keydown", onKey);
   }, [handleUndo, handleRedo]);
 
+  // Reset the "saved" badge after a moment; cleared on unmount.
+  const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const scheduleIdle = useCallback(() => {
+    if (idleTimer.current) clearTimeout(idleTimer.current);
+    idleTimer.current = setTimeout(() => setSaveStatus("idle"), 2000);
+  }, []);
+
   // After undo/redo, persist all blocks to server
   const saveAllRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
@@ -70,12 +77,19 @@ export function BlockCanvas({ page }: Props) {
           )
         );
         setSaveStatus("saved");
-        setTimeout(() => setSaveStatus("idle"), 2000);
+        scheduleIdle();
       } catch {
         setSaveStatus("error");
       }
     }, 400);
-  }, [blocks, loading, pageId]);
+  }, [blocks, loading, pageId, scheduleIdle]);
+
+  useEffect(
+    () => () => {
+      if (idleTimer.current) clearTimeout(idleTimer.current);
+    },
+    []
+  );
 
   // ── Load ──────────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -98,7 +112,7 @@ export function BlockCanvas({ page }: Props) {
         setLoading(false);
       });
     return () => { cancelled = true; setLoading(true); resetBlocks([]); };
-  }, [pageId]);
+  }, [pageId, resetBlocks]);
 
   // ── Autosave (debounced 800ms) ─────────────────────────────────────────────
   const dirtyRef = useRef<Set<string>>(new Set());
@@ -133,13 +147,13 @@ export function BlockCanvas({ page }: Props) {
             })
           );
           setSaveStatus("saved");
-          setTimeout(() => setSaveStatus("idle"), 2000);
+          scheduleIdle();
         } catch {
           setSaveStatus("error");
         }
       }, 800);
     },
-    [pageId]
+    [pageId, scheduleIdle]
   );
 
   // ── Block mutations ────────────────────────────────────────────────────────
@@ -261,7 +275,7 @@ export function BlockCanvas({ page }: Props) {
               onClick={handleUndo}
               disabled={!canUndo}
               title="Undo (⌘Z)"
-              className="rounded p-1.5 text-muted-foreground hover:bg-white/10 hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition"
+              className="rounded p-1.5 text-muted-foreground hover:bg-fill-subtle/10 hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition"
             >
               <Undo2 className="h-3.5 w-3.5" />
             </button>
@@ -270,7 +284,7 @@ export function BlockCanvas({ page }: Props) {
               onClick={handleRedo}
               disabled={!canRedo}
               title="Redo (⌘⇧Z)"
-              className="rounded p-1.5 text-muted-foreground hover:bg-white/10 hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition"
+              className="rounded p-1.5 text-muted-foreground hover:bg-fill-subtle/10 hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition"
             >
               <Redo2 className="h-3.5 w-3.5" />
             </button>
@@ -398,10 +412,10 @@ function EditableBlockFrame({
           </span>
         )}
         <div className="flex items-center gap-0.5 shrink-0">
-          <button type="button" onClick={() => onMove(block.id, -1)} className="rounded p-1 hover:bg-white/10" aria-label="Move block up">
+          <button type="button" onClick={() => onMove(block.id, -1)} className="rounded p-1 hover:bg-fill-subtle/10" aria-label="Move block up">
             <ArrowUp className="h-3 w-3" aria-hidden="true" />
           </button>
-          <button type="button" onClick={() => onMove(block.id, 1)} className="rounded p-1 hover:bg-white/10" aria-label="Move block down">
+          <button type="button" onClick={() => onMove(block.id, 1)} className="rounded p-1 hover:bg-fill-subtle/10" aria-label="Move block down">
             <ArrowDown className="h-3 w-3" aria-hidden="true" />
           </button>
           <button
@@ -502,10 +516,10 @@ function ChildBlockFrame({ block, selected, onSelect, onDelete, onMove }: ChildF
           )}
           onClick={(e) => e.stopPropagation()}
         >
-          <button type="button" onClick={() => onMove(block.id, -1)} className="rounded p-0.5 hover:bg-white/10" aria-label="Move up">
+          <button type="button" onClick={() => onMove(block.id, -1)} className="rounded p-0.5 hover:bg-fill-subtle/10" aria-label="Move up">
             <ArrowUp className="h-3 w-3" aria-hidden="true" />
           </button>
-          <button type="button" onClick={() => onMove(block.id, 1)} className="rounded p-0.5 hover:bg-white/10" aria-label="Move down">
+          <button type="button" onClick={() => onMove(block.id, 1)} className="rounded p-0.5 hover:bg-fill-subtle/10" aria-label="Move down">
             <ArrowDown className="h-3 w-3" aria-hidden="true" />
           </button>
           <button type="button" onClick={() => onDelete(block.id)} className="rounded p-0.5 text-red-400 hover:bg-red-400/10" aria-label="Delete">

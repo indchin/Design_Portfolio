@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useId, useState } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Dialog } from "@/components/ui/dialog";
 import type { Persona } from "@/content/case-studies/adapt-authoring-tool";
 
 /* ---------------------------------------------------------------- modal */
@@ -14,46 +15,26 @@ function PersonaModal({
   persona: Persona;
   onClose: () => void;
 }) {
-  const overlayRef = useRef<HTMLDivElement>(null);
-
-  // close on Escape
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
-  // lock body scroll
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
-  }, []);
+  const titleId = useId();
 
   return (
-    <div
-      ref={overlayRef}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
-      aria-modal="true"
-      role="dialog"
-      aria-label={persona.archetype}
-      onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
+    <Dialog
+      onClose={onClose}
+      labelledBy={titleId}
+      overlayClassName="bg-black/70 p-4 backdrop-blur-sm sm:p-8"
+      className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-surface-elevated shadow-2xl"
     >
-      {/* backdrop */}
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" aria-hidden="true" />
-
-      {/* panel */}
-      <div className="relative z-10 flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/[0.1] bg-[#0e0e12] shadow-2xl">
         {/* header */}
-        <div className="flex items-start justify-between gap-4 border-b border-white/[0.06] p-6 sm:p-8">
+        <div className="flex items-start justify-between gap-4 border-b border-border p-6 sm:p-8">
           <div className="flex items-center gap-4">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-3xl">
+            <span aria-hidden="true" className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-border bg-white/[0.03] text-3xl">
               {persona.emoji}
             </span>
             <div>
               <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary/80">
                 Persona
               </div>
-              <h2 className="mt-0.5 font-display text-xl font-semibold tracking-tight">
+              <h2 id={titleId} className="mt-0.5 font-display text-xl font-semibold tracking-tight">
                 {persona.archetype}
               </h2>
             </div>
@@ -63,7 +44,7 @@ function PersonaModal({
             aria-label="Close"
             className="mt-0.5 rounded-lg p-1.5 text-muted-foreground transition hover:bg-white/[0.06] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            <X className="h-5 w-5" />
+            <X className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
 
@@ -86,7 +67,7 @@ function PersonaModal({
           {/* goals + frustrations */}
           <div className="mt-6 grid gap-5 sm:grid-cols-2">
             {persona.goals && persona.goals.length > 0 && (
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5">
+              <div className="rounded-xl border border-border bg-white/[0.02] p-5">
                 <SectionLabel>Goals</SectionLabel>
                 <ul className="mt-3 space-y-2.5">
                   {persona.goals.map((g) => (
@@ -99,7 +80,7 @@ function PersonaModal({
               </div>
             )}
             {persona.frustrations && persona.frustrations.length > 0 && (
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5">
+              <div className="rounded-xl border border-border bg-white/[0.02] p-5">
                 <SectionLabel>Frustrations</SectionLabel>
                 <ul className="mt-3 space-y-2.5">
                   {persona.frustrations.map((f) => (
@@ -114,7 +95,7 @@ function PersonaModal({
           </div>
 
           {/* what they need */}
-          <div className="mt-5 rounded-xl border border-white/[0.06] bg-white/[0.02] p-5">
+          <div className="mt-5 rounded-xl border border-border bg-white/[0.02] p-5">
             <SectionLabel>What they need</SectionLabel>
             <ul className="mt-3 flex flex-wrap gap-2">
               {persona.needs.map((need) => (
@@ -130,13 +111,13 @@ function PersonaModal({
 
           {/* tools */}
           {persona.tools && persona.tools.length > 0 && (
-            <div className="mt-5 rounded-xl border border-white/[0.06] bg-white/[0.02] p-5">
+            <div className="mt-5 rounded-xl border border-border bg-white/[0.02] p-5">
               <SectionLabel>Tools they use</SectionLabel>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {persona.tools.map((tool) => (
                   <li
                     key={tool}
-                    className="rounded-full border border-white/[0.1] bg-white/[0.04] px-3 py-1 text-xs font-medium text-foreground/70"
+                    className="rounded-full border border-border bg-white/[0.04] px-3 py-1 text-xs font-medium text-foreground/70"
                   >
                     {tool}
                   </li>
@@ -150,8 +131,7 @@ function PersonaModal({
             &ldquo;{persona.quote}&rdquo;
           </blockquote>
         </div>
-      </div>
-    </div>
+    </Dialog>
   );
 }
 
@@ -176,8 +156,8 @@ export function PersonaGrid({ personas }: { personas: Persona[] }) {
             key={p.id}
             onClick={() => setActive(p)}
             className={cn(
-              "group flex w-full flex-col rounded-2xl border border-white/[0.06] bg-white/[0.02] p-7 text-left",
-              "transition hover:border-white/[0.14] hover:bg-white/[0.04]",
+              "group flex w-full flex-col rounded-2xl border border-border bg-white/[0.02] p-7 text-left",
+              "transition hover:border-foreground/30 hover:bg-white/[0.04]",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             )}
             aria-label={`Open ${p.archetype} persona`}

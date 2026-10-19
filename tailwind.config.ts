@@ -25,6 +25,8 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        hairline: "hsl(var(--hairline))",
+        "fill-subtle": "hsl(var(--fill-subtle))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
@@ -39,6 +41,14 @@ const config: Config = {
           DEFAULT: "hsl(var(--surface))",
           elevated: "hsl(var(--surface-elevated))"
         },
+        draft: {
+          fg: "var(--draft-fg)",
+          bg: "var(--draft-bg)",
+          border: "var(--draft-border)"
+        },
+        "chip-done": { fg: "var(--chip-done-fg)", bg: "var(--chip-done-bg)" },
+        "chip-pending": { fg: "var(--chip-pending-fg)", bg: "var(--chip-pending-bg)" },
+        "chip-locked": { fg: "var(--chip-locked-fg)", bg: "var(--chip-locked-bg)" },
         accent: {
           blue: "#67e8f9",
           green: "#8bffbe",

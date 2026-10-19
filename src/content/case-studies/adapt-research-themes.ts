@@ -13,6 +13,7 @@ export type ResearchThemesDoc = {
     body: string;
   };
   source: string;
+  consentNote?: string;
 };
 
 export const adaptUsabilityResearchThemes: ResearchThemesDoc = {
@@ -21,9 +22,9 @@ export const adaptUsabilityResearchThemes: ResearchThemesDoc = {
     "The following research themes were synthesized from 66 tags across 10 usability testing sessions on the Adapt Theming Global Padding Settings feature. These themes represent the core patterns and user sentiments that emerged from the research.",
   themes: [
     {
-      title: "Theme 1: Approach B Is the Clear Winner",
+      title: "Theme 1: Approach B Was Preferred",
       tags: "Approach B preferred – less manual work · Approach B more logical · Liked approach B",
-      body: "Participants consistently favored Approach B over alternatives. It was perceived as more logical, requiring less manual work, and aligning better with users' mental models for configuring padding."
+      body: "Approach B was preferred by 4 of 6 participants who understood the distinction between the approaches. It was perceived as more logical, requiring less manual work, and aligning better with users' mental models for configuring padding."
     },
     {
       title: "Theme 2: Visual UI Preferred Over CSS Coding",
@@ -75,5 +76,7 @@ export const adaptUsabilityResearchThemes: ResearchThemesDoc = {
     tags: "Positive · Negative · Important Findings · Opportunities · Expectations",
     body: "These cross-cutting sentiment tags were applied across sessions to categorize highlights by valence and significance, enabling quick filtering of positive feedback, pain points, key opportunities, and user expectations."
   },
-  source: "https://laerdal.dovetail.com/docs/3Ugkq5KauIc6YsSHcidZHP"
+  source: "",
+  consentNote:
+    "Participants gave consent for internal research use; names and identifying detail removed for publication."
 };

@@ -1,9 +1,13 @@
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { CommandPalette } from "@/components/command-palette";
 import { CursorGlow } from "@/components/cursor-glow";
+import { MotionProvider } from "@/components/motion-provider";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { portfolio } from "@/content/portfolio";
+
+const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-sans" });
 
 export const viewport: Viewport = {
   themeColor: "#05070d",
@@ -59,7 +63,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body className="font-sans antialiased">
         <a
           href="#main"
@@ -67,10 +71,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Skip to content
         </a>
-        <SmoothScroll />
-        <CursorGlow />
-        {children}
-        <CommandPalette />
+        <MotionProvider>
+          <SmoothScroll />
+          <CursorGlow />
+          {children}
+          <CommandPalette />
+        </MotionProvider>
       </body>
     </html>
   );

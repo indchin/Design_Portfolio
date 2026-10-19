@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { ChevronLeft, ChevronRight, X, ZoomIn, type LucideIcon } from "lucide-react";
+import { Dialog } from "@/components/ui/dialog";
 import type { ResearchArtifact, RecordingItem } from "@/content/case-studies/adapt-authoring-tool";
 
 function Lightbox({
@@ -16,36 +17,30 @@ function Lightbox({
   onIndexChange: (index: number) => void;
   onClose: () => void;
 }) {
-  const overlayRef = useRef<HTMLDivElement>(null);
   const item = items[index];
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
       if (e.key === "ArrowRight") onIndexChange((index + 1) % items.length);
       if (e.key === "ArrowLeft") onIndexChange((index - 1 + items.length) % items.length);
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [onClose, onIndexChange, index, items.length]);
+  }, [onIndexChange, index, items.length]);
 
   return (
-    <div
-      ref={overlayRef}
-      className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-10"
-      aria-modal="true"
-      role="dialog"
-      aria-label={item.name}
-      onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
+    <Dialog
+      onClose={onClose}
+      label={item.name}
+      overlayClassName="bg-black/90 backdrop-blur-sm"
+      className="relative flex h-full w-full items-center justify-center p-4 sm:p-10"
     >
-      <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" aria-hidden="true" />
-
       <button
         onClick={onClose}
         aria-label="Close"
         className="absolute right-4 top-4 z-10 rounded-lg p-2 text-white/80 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:right-8 sm:top-8"
       >
-        <X className="h-6 w-6" />
+        <X className="h-6 w-6" aria-hidden="true" />
       </button>
 
       {items.length > 1 && (
@@ -55,14 +50,14 @@ function Lightbox({
             aria-label="Previous"
             className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-lg p-2 text-white/80 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:left-4"
           >
-            <ChevronLeft className="h-7 w-7" />
+            <ChevronLeft className="h-7 w-7" aria-hidden="true" />
           </button>
           <button
             onClick={() => onIndexChange((index + 1) % items.length)}
             aria-label="Next"
             className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-lg p-2 text-white/80 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:right-4"
           >
-            <ChevronRight className="h-7 w-7" />
+            <ChevronRight className="h-7 w-7" aria-hidden="true" />
           </button>
         </>
       )}
@@ -83,7 +78,7 @@ function Lightbox({
           {item.date && <div className="mt-0.5 text-xs text-white/60">{item.date}</div>}
         </div>
       </div>
-    </div>
+    </Dialog>
   );
 }
 
@@ -94,42 +89,23 @@ function ArtifactModal({
   artifact: ResearchArtifact;
   onClose: () => void;
 }) {
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
   const items = artifact.items ?? [];
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape" || lightboxIndex !== null) return;
-      onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [onClose, lightboxIndex]);
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
-  }, []);
-
   return (
-    <div
-      ref={overlayRef}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
-      aria-modal="true"
-      role="dialog"
-      aria-label={artifact.label}
-      onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
+    <Dialog
+      onClose={onClose}
+      labelledBy={titleId}
+      overlayClassName="bg-black/70 p-4 backdrop-blur-sm sm:p-8"
+      className="flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-border bg-surface-elevated shadow-2xl"
     >
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" aria-hidden="true" />
-
-      <div className="relative z-10 flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-white/[0.1] bg-[#0e0e12] shadow-2xl">
-        <div className="flex items-start justify-between gap-4 border-b border-white/[0.06] p-6 sm:p-8">
+        <div className="flex items-start justify-between gap-4 border-b border-border p-6 sm:p-8">
           <div>
             <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary/80">
               Research artifact
             </div>
-            <h2 className="mt-0.5 font-display text-xl font-semibold tracking-tight">
+            <h2 id={titleId} className="mt-0.5 font-display text-xl font-semibold tracking-tight">
               {artifact.label}
             </h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">{artifact.description}</p>
@@ -139,7 +115,7 @@ function ArtifactModal({
             aria-label="Close"
             className="mt-0.5 shrink-0 rounded-lg p-1.5 text-muted-foreground transition hover:bg-white/[0.06] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            <X className="h-5 w-5" />
+            <X className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
 
@@ -149,7 +125,7 @@ function ArtifactModal({
               <button
                 key={item.name}
                 onClick={() => setLightboxIndex(i)}
-                className="group overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.02] text-left transition hover:border-white/[0.16] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="group overflow-hidden rounded-xl border border-border bg-white/[0.02] text-left transition hover:border-foreground/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <div className="relative aspect-video w-full bg-black/40">
                   <Image src={item.image} alt={item.name} fill className="object-cover" />
@@ -165,7 +141,6 @@ function ArtifactModal({
             ))}
           </div>
         </div>
-      </div>
 
       {lightboxIndex !== null && (
         <Lightbox
@@ -175,7 +150,7 @@ function ArtifactModal({
           onClose={() => setLightboxIndex(null)}
         />
       )}
-    </div>
+    </Dialog>
   );
 }
 

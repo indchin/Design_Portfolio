@@ -114,7 +114,7 @@ export const portfolio: Portfolio = {
       metrics: [
         { label: "Participants", value: "17", detail: "9 discovery interviews + 8 usability sessions" },
         { label: "Personas", value: "5", detail: "synthesised from 3 geographies and role types" },
-        { label: "Decisions shipped", value: "4", detail: "evidence-backed design decisions adopted by product team" }
+        { label: "Design decisions validated", value: "4", detail: "evidence-backed design decisions adopted by product team" }
       ],
       sections: [
         {
@@ -127,32 +127,32 @@ export const portfolio: Portfolio = {
     },
     {
       id: "cs-nrp",
-      title: "Neonatal Resuscitation Program",
+      title: "NRP Learning Platform → PediaSkills",
       slug: "neonatal-resuscitation-program",
       excerpt:
-        "Designing the custom LMS + e-commerce platform that replaced HealthStream as the American Academy of Pediatrics' system for life-saving neonatal resuscitation training — four user roles, complex rank/status business rules, 5-year history migration, WCAG 2.1 AA.",
+        "Lead Interaction Designer on the platform that takes clinicians and instructors from sign-up to certified NRP provider, from the 2020 MVP to the 2026 PediaSkills rebrand.",
       category: "Healthcare · EdTech",
-      tags: ["Healthcare", "EdTech", "Design Systems", "Accessibility", "Information Architecture"],
+      tags: ["Healthcare", "EdTech", "Design Systems", "Information Architecture"],
       role: "Lead Interaction Designer",
-      client: "American Academy of Pediatrics · Laerdal Medical",
-      year: "2022 – Present",
+      client: "American Academy of Pediatrics · Laerdal · RQI Partners",
+      year: "2020 – 2026",
       duration: "Multi-year programme",
       status: "published",
       featured: true,
       cover: "/nrp-cover.png",
       accent: "#67e8f9",
-      updatedAt: "2026-05-29",
+      updatedAt: "2026-10-12",
       metrics: [
         { label: "Strategic partner", value: "AAP", detail: "American Academy of Pediatrics" },
-        { label: "User roles", value: "4", detail: "Providers, Instructor Candidates, Instructors, Institutional Admins" },
-        { label: "Ownership", value: "Lead", detail: "End-to-end UX — replacing HealthStream as AAP's LMS" }
+        { label: "Role", value: "Lead", detail: "Lead Interaction Designer" },
+        { label: "Span", value: "2020 – 2026", detail: "MVP to the PediaSkills rebrand" }
       ],
       sections: [
         {
           id: "summary",
           type: "problem",
           title: "Summary",
-          body: "The full case study lives at /work/neonatal-resuscitation-program — covering the strategic context, user roles, IA decisions, the rank/status business-rule UX, the eCard experience, migration design, and impact."
+          body: "The full case study lives at /work/neonatal-resuscitation-program — covering the context and problem, six role groups, research, journeys, design decisions, evolution to the PediaSkills rebrand, and outcomes."
         }
       ]
     },
@@ -163,13 +163,13 @@ export const portfolio: Portfolio = {
       excerpt:
         "An online medical eLearning marketplace that let healthcare professionals discover, purchase, and complete AHA-certified courses at scale — designed at Impelsys for the American Heart Association.",
       category: "Healthcare · EdTech",
-      tags: ["Healthcare", "EdTech", "Ecommerce", "Research"],
+      tags: ["Healthcare", "EdTech", "Ecommerce"],
       role: "Sr. Interaction Designer",
       client: "American Heart Association · Impelsys",
       year: "2018 – 2020",
       duration: "Multi-year engagement",
       status: "published",
-      featured: true,
+      featured: false,
       cover: "/shopcpr-cover.png",
       accent: "#ff7ab6",
       updatedAt: "2026-05-28",
@@ -189,7 +189,7 @@ export const portfolio: Portfolio = {
           id: "scope",
           type: "process",
           title: "Scope of work",
-          body: "Owned UX strategy, research, wireframes, and high-fidelity UI for the platform's core flows. Recognised twice with the Impelsys Excellence Award in 2019 for the ShopCPR and ecommerce contributions.",
+          body: "Owned wireframes and high-fidelity UI for the platform's core flows. Recognised twice with the Impelsys Excellence Award in 2019 for the ShopCPR and ecommerce contributions.",
           bullets: [
             "Course discovery and catalogue browsing",
             "Authentication, purchase, and licensing flows",
@@ -198,10 +198,10 @@ export const portfolio: Portfolio = {
           ]
         },
         {
-          id: "status",
+          id: "summary",
           type: "lessons",
-          title: "Detailed case study coming soon",
-          body: "A full write-up of the research, key design decisions, and outcomes is in preparation. Available on request in the meantime."
+          title: "At a glance",
+          body: "Sr. Interaction Designer on the AHA ShopCPR platform at Impelsys, 2018 – 2020. Work covered catalogue browsing, course discovery, purchase and licensing flows, and responsive UI for hospital and mobile contexts. Recognised with two Impelsys Excellence Awards in 2019."
         }
       ]
     },

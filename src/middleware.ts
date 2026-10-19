@@ -1,45 +1,56 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { createSupabaseMiddlewareClient } from "@/lib/supabase-ssr";
-
-const ADMIN_EMAILS = (process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? "")
-  .split(",")
-  .map((e) => e.trim().toLowerCase())
-  .filter(Boolean);
+import { getAdminEmails, isAdminEmail } from "@/lib/require-admin";
 
 export async function middleware(req: NextRequest) {
-  const res = NextResponse.next();
-  const supabase = createSupabaseMiddlewareClient(req, res);
-
-  const {
-    data: { session }
-  } = await supabase.auth.getSession();
-
   const { pathname } = req.nextUrl;
 
-  // Allow the login page and auth API routes through without a session check.
+  // Allow the login page and auth routes through without a session check.
   if (pathname.startsWith("/admin/login") || pathname.startsWith("/auth/")) {
-    return res;
+    return NextResponse.next();
   }
 
-  if (!session) {
-    const loginUrl = req.nextUrl.clone();
-    loginUrl.pathname = "/admin/login";
-    loginUrl.searchParams.set("next", pathname);
-    return NextResponse.redirect(loginUrl);
-  }
+  const isApi = pathname.startsWith("/api/");
+  const res = NextResponse.next();
 
-  // Allowlist check — only configured admin emails may access the dashboard.
-  if (ADMIN_EMAILS.length > 0 && !ADMIN_EMAILS.includes((session.user.email ?? "").toLowerCase())) {
+  const deny = (status: 401 | 403) => {
+    if (isApi) {
+      return NextResponse.json(
+        { ok: false, error: status === 401 ? "Unauthorized" : "Forbidden" },
+        { status }
+      );
+    }
     const loginUrl = req.nextUrl.clone();
     loginUrl.pathname = "/admin/login";
-    loginUrl.searchParams.set("error", "unauthorized");
+    loginUrl.search = "";
+    if (status === 401) loginUrl.searchParams.set("next", pathname);
+    else loginUrl.searchParams.set("error", "unauthorized");
     return NextResponse.redirect(loginUrl);
-  }
+  };
+
+  // Fail closed: no configured admins means nobody gets in.
+  if (getAdminEmails().length === 0) return deny(403);
+
+  const supabase = createSupabaseMiddlewareClient(req, res);
+  // getUser() validates the token with Supabase; getSession() only reads the cookie.
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) return deny(401);
+  if (!isAdminEmail(user.email)) return deny(403);
 
   return res;
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/pages/:path*", "/api/assets/:path*", "/preview/:path*"]
+  matcher: [
+    "/admin/:path*",
+    "/api/pages/:path*",
+    "/api/assets/:path*",
+    "/api/case-studies/:path*",
+    "/api/case-studies",
+    "/preview/:path*"
+  ]
 };

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { portfolio } from "@/content/portfolio";
+import { requireAdmin } from "@/lib/require-admin";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 
 const sectionSchema = z.object({
@@ -36,6 +37,9 @@ const payloadSchema = z.object({
 });
 
 export async function GET() {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   if (!supabaseAdmin) {
     return NextResponse.json({ ok: true, source: "static", studies: portfolio.caseStudies });
   }
@@ -46,14 +50,17 @@ export async function GET() {
     .order("updated_at", { ascending: false });
 
   if (error) {
-    return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ ok: false, error: "Request failed" }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true, source: "supabase", studies: data });
 }
 
 export async function POST(request: Request) {
-  const parsed = payloadSchema.safeParse(await request.json());
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
+  const parsed = payloadSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
     return NextResponse.json({ ok: false, error: "Invalid case study payload" }, { status: 400 });
   }

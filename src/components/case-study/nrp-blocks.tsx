@@ -178,6 +178,8 @@ export function AccessibilityBlock({
   intro: string;
   items: string[];
 }) {
+  // Nothing documented, nothing claimed: omit the block rather than show a disclaimer-only section.
+  if (items.length === 0) return null;
   return (
     <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[1fr_1.4fr]">
       <div>

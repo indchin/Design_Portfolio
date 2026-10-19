@@ -162,13 +162,13 @@ export const adaptCaseStudy: AdaptCaseStudy = {
   tension: [
     "Adapt is the engine behind hundreds of clinical and public-health eLearning courses Laerdal delivers worldwide — courses that train frontline workers in India, run on WHO Academy, and ship inside paid simulator subscriptions. It is, in effect, mission-critical infrastructure.",
     "It also had never been studied.",
-    "In five years of internal adoption, no one had sat down with the people who actually open Adapt every morning and asked them what their day looks like. Decisions about features, updates, and roadmap were being made on assumptions — assumptions that were quietly diverging from reality. Course creators were comparing Adapt unfavourably to Articulate Rise 360 in private. Power users were leaving meetings frustrated. A senior EdTech specialist had spent five years championing Adapt internally and was now describing the same structural problems he had flagged on day one.",
+    "In five years of internal adoption, no one had sat down with the people who actually open Adapt every morning and asked them what their day looks like. Decisions about features, updates, and roadmap were being made on assumptions — assumptions that were quietly diverging from reality. Course creators were comparing Adapt unfavourably to Articulate Rise 360. Experienced users kept raising the same issues. Long-time champions of the platform were describing structural problems they had flagged years earlier.",
     "The risk was not abstract. If creators started defecting to Rise 360, Laerdal would lose the open-source flexibility, partner integrations (WHO Academy, Knowledge Hub), and institutional library that Adapt uniquely supported. The whole vision of \"build a course in two weeks\" depended on creators who wanted to be on the platform.",
     "I joined to change that — by replacing assumption with evidence."
   ],
   problem: {
     business:
-      "Course creators were spending disproportionate time fighting the tool instead of building content. Delivery timelines were slipping, framework updates were breaking live courses without warning, and informal abandonment signals were appearing — most visibly, repeated unfavourable comparisons to a competitor (Articulate Rise 360) from senior internal voices.",
+      "Course creators were spending disproportionate time fighting the tool instead of building content. Delivery timelines were slipping, framework updates were breaking live courses without warning, and informal abandonment signals were appearing — most visibly, repeated unfavourable comparisons to a competitor (Articulate Rise 360) from experienced users.",
     user:
       "The people building these courses came from radically different backgrounds — a designer in Norway, a doctor in India, a project manager coordinating 14 languages — and Adapt was built as if they were one person. The interface assumed daily fluency, the workflow assumed solo creation, and the platform assumed updates would never break anything downstream. None of those assumptions held for any of them.",
     stakes:
@@ -186,40 +186,26 @@ export const adaptCaseStudy: AdaptCaseStudy = {
       { label: "Format", value: "Semi-structured 45–60 minute qualitative interviews, remote" },
       { label: "Participants", value: "9 course creators across Laerdal India, Norway, and WHO Academy context" },
       { label: "Range", value: "From a 10+ year senior EdTech specialist to an SME who used the tool intensively for two years then went largely inactive" },
-      { label: "Recruitment axes", value: "Geography (India, Norway, partner context) · Role (designer, SME, PM, technical lead) · Frequency (daily power user → occasional returner)" }
+      { label: "Recruitment axes", value: "Geography (India, Norway, partner context) · Role (designer, SME, PM, technical lead) · Frequency (daily power user → occasional returner)" },
+      { label: "Consent", value: "Participants gave consent for internal research use; names and identifying detail removed for publication." }
     ],
     usability: [
       { label: "Format", value: "Moderated remote usability testing with a Figma prototype" },
       { label: "Task focus", value: "Global padding settings — Approach A (block top + block bottom) vs Approach B (block top + component top)" },
       { label: "Participants", value: "8 course creators including returning Phase 1 voices and fresh perspectives" },
-      { label: "Protocol", value: "Think-aloud, screen recording, structured post-task interview" }
+      { label: "Protocol", value: "Think-aloud, screen recording, structured post-task interview" },
+      { label: "Consent", value: "Participants gave consent for internal research use; names and identifying detail removed for publication." }
     ],
     discoveryResearch: {
       recordings: {
         label: "Recordings",
-        description: "9 semi-structured interview sessions, video recorded with consent",
-        items: [
-          { name: "Dr. Rashmi", date: "6 Aug 2024", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/recordings/rashmi.png" },
-          { name: "Dr. Swati Sethi", date: "18 Jun 2024", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/recordings/swati.png" },
-          { name: "Cathrine Stene", date: "17 Jun 2024", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/recordings/cathrine.png" },
-          { name: "Princy Fernando", date: "14 Jun 2024", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/recordings/princy.png" },
-          { name: "Winston Ahsam", date: "14 Jun 2024", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/recordings/winston.png" },
-          { name: "Bjorn Mike Boge", date: "13 Jun 2024", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/recordings/bjorn.png" },
-          { name: "Hilde Tertnæs", date: "13 Jun 2024", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/recordings/hilde.png" },
-          { name: "Venke Eiane Sæthre", date: "12 Jun 2024", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/recordings/venke.png" },
-          { name: "Yuliia Kosheva", date: "28 May 2024", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/recordings/yuliia.png" }
-        ]
+        description: "9 semi-structured interview sessions, recorded with consent. Recordings are internal and not published.",
+        items: []
       },
       analysis: {
         label: "Analysis",
-        description: "Affinity-mapped transcripts, tagged in Dovetail and synthesised into 6 evidence-backed findings and 5 personas",
-        items: [
-          { name: "Tag dashboard overview", date: "Dovetail", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/analysis/tags-overview.png" },
-          { name: "Positive tags (Gains)", date: "Synthesis", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/analysis/positive-tags.png" },
-          { name: "Expectations & current functionality", date: "Synthesis", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/analysis/expectations.png" },
-          { name: "Opportunities (what customers look for)", date: "Synthesis", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/analysis/opportunities.png" },
-          { name: "Important findings", date: "Synthesis", image: "https://nzoqkngsmtxagvdfzpzv.supabase.co/storage/v1/object/public/portfolio-assets/case-studies/adapt-authoring-tool/analysis/findings.png" }
-        ]
+        description: "Affinity-mapped transcripts, synthesised into 6 evidence-backed findings and 5 personas",
+        items: []
       },
       report: {
         label: "Report",
@@ -230,24 +216,13 @@ export const adaptCaseStudy: AdaptCaseStudy = {
     usabilityResearch: {
       recordings: {
         label: "Recordings",
-        description: "8 moderated usability sessions, screen and think-aloud audio recorded",
-        items: [
-          { name: "Shreya Sidnale", date: "12 Jun 2025", image: "/api/reports/case-studies/adapt-authoring-tool/usability-recordings/shreya.png" },
-          { name: "Anjineyulu Roddareddy", date: "18 Jun 2025", image: "/api/reports/case-studies/adapt-authoring-tool/usability-recordings/anjineyulu.png" },
-          { name: "Evita Purzale", date: "Jun 2025", image: "/api/reports/case-studies/adapt-authoring-tool/usability-recordings/evita.png" },
-          { name: "Winston Ahsam", date: "Jun 2025", image: "/api/reports/case-studies/adapt-authoring-tool/usability-recordings/winston.png" },
-          { name: "David Pedersen", date: "24 Jun 2025", image: "/api/reports/case-studies/adapt-authoring-tool/usability-recordings/david.png" },
-          { name: "Jesper Hylbæk", date: "24 Jun 2025", image: "/api/reports/case-studies/adapt-authoring-tool/usability-recordings/jesper.png" },
-          { name: "Dr. Swati Sethi", date: "20 Jun 2025", image: "/api/reports/case-studies/adapt-authoring-tool/usability-recordings/swati.png" },
-          { name: "P.G. Keerthana", date: "Jun 2025", image: "/api/reports/case-studies/adapt-authoring-tool/usability-recordings/keerthana.png" }
-        ]
+        description: "8 moderated usability sessions, screen and think-aloud audio recorded. Recordings are internal and not published.",
+        items: []
       },
       analysis: {
         label: "Analysis",
         description: "Task success, preference split (Approach A vs B), and comprehension issues coded per session",
-        items: [
-          { name: "Tag board — Positive, Negative, Opportunities, Expectations, Behavior", date: "Dovetail", image: "/api/reports/case-studies/adapt-authoring-tool/usability-analysis/tags-board.png" }
-        ]
+        items: []
       },
       report: {
         label: "Report",
@@ -296,9 +271,9 @@ export const adaptCaseStudy: AdaptCaseStudy = {
         "Framework updates break courses without warning — auditing 30+ active courses after each update",
         "No instance-level governance tools; naming conventions are enforced manually or not at all",
         "Internal review still runs over email and Excel; no in-platform commenting",
-        "Has raised the same structural problems since day one with limited resolution"
+        "Long-standing structural problems remain only partly resolved"
       ],
-      context: "The institutional memory of the Adapt platform. Has championed its adoption for years and built the house conventions that keep 430 courses coherent. Uses CSS and extensions fluently. His frustration is proportional to his investment — he believes in the platform and is most affected when it fails to deliver on its promise.",
+      context: "The institutional memory of the Adapt platform. Has championed its adoption for years and built the house conventions that keep 430 courses coherent. Uses CSS and extensions fluently. Frustration is proportional to investment — this user believes in the platform and is most affected when it fails to deliver on its promise.",
       tools: ["Adapt Authoring Tool", "CSS overrides", "Excel (review tracking)", "Email", "SmartLink"]
     },
     {
@@ -327,7 +302,7 @@ export const adaptCaseStudy: AdaptCaseStudy = {
       id: "localisation-orchestrator",
       emoji: "🌍",
       archetype: "The Localisation Orchestrator",
-      pitch: "Senior project manager. 21 years at Laerdal. Coordinates 430 courses across 14 languages.",
+      pitch: "Senior project manager. 20+ years at Laerdal. Coordinates 430 courses across 14 languages.",
       experience: "Medium · Understands the system architecture, not a developer",
       needs: ["Role-scoped reviewer access", "Automated update notifications", "Side-by-side translation review", "SmartLink/BAM integration"],
       quote: "Any automation or simplification, integration is helpful. And having a hotline is also very useful in case it's burning.",
@@ -342,7 +317,7 @@ export const adaptCaseStudy: AdaptCaseStudy = {
         "No automated notifications when a framework update affects a course in her portfolio",
         "SmartLink and BAM integration requires manual effort that creates synchronisation errors"
       ],
-      context: "21 years at Laerdal. The connective tissue between the platform, the partners, and the regional teams. Understands the system well enough to diagnose problems but not to fix them in code. Every manual process she manages represents a gap in platform capability — and she has built workarounds for all of them.",
+      context: "20+ years at Laerdal. The connective tissue between the platform, the partners, and the regional teams. Understands the system well enough to diagnose problems but not to fix them in code. Every manual process she manages represents a gap in platform capability — and she has built workarounds for all of them.",
       tools: ["Adapt Authoring Tool", "SmartLink", "BAM", "Excel (course registry)", "Email", "SharePoint"]
     },
     {
@@ -375,7 +350,7 @@ export const adaptCaseStudy: AdaptCaseStudy = {
       title: "The platform has a hidden competency threshold",
       body: [
         "Mastery is only possible through daily use, and it disappears during gaps. A designer returning after six months described it as starting over. A senior team lead described new joiners finding it \"very heavy to learn.\" A doctor was definitive: \"It does not specify a good error.\"",
-        "This isn't a complaint. It's a structural property of the tool — and it explains the bottleneck dependency on a small number of internal experts (\"ask Purnima,\" \"ask David,\" \"ask Catherine\"). The pool of effective users is artificially small."
+        "This isn't a complaint. It's a structural property of the tool — and it explains the bottleneck dependency on a small number of internal experts (\"ask the EdTech specialist,\" \"ask the senior designer,\" \"ask the graphic manager\"). The pool of effective users is artificially small."
       ],
       implication:
         "Onboarding and contextual help need fundamental redesign. A front-end editor would lower the threshold most.",
@@ -478,7 +453,7 @@ export const adaptCaseStudy: AdaptCaseStudy = {
         after:
           "Standard / Half / Double / Remove as primary labels, with a pixel value on hover (\"Standard = 24px\"). Plain-language for the SME, precise for the architect.",
         drivenBy:
-          "Keerthana explicitly asked for a reference table mid-session; the relational labels tested as immediately understood."
+          "One tester (U8) explicitly asked for a reference table mid-session; the relational labels tested as immediately understood."
       },
       {
         title: "Explicit hierarchy naming",
@@ -496,13 +471,13 @@ export const adaptCaseStudy: AdaptCaseStudy = {
         after:
           "The new model applies to new courses by default, with an opt-in migration path for existing ones — no silent breakage of delivered work.",
         drivenBy:
-          "David Pedersen: \"I might have to redo my old paddings… they already have a lot of this mix of the old way.\""
+          "Tester U5: \"I might have to redo my old paddings… they already have a lot of this mix of the old way.\""
       }
     ],
     beyondPadding: {
       title: "How this scales to the P0 — the front-end editor",
       body:
-        "The padding redesign is deliberately a wedge, not the destination. Its core principle — see the result where you make the change — is the same principle behind the front-end editing mode that four senior participants raised unprompted as the platform's biggest gap. Validating the in-context preview at the scale of one setting de-risks the argument for it at the scale of the whole editor: it proves the interaction model works for Adapt's users before the team commits to the far larger build. The spacing work is the smallest shippable proof of the direction the platform needs to move."
+        "The padding redesign is deliberately a wedge, not the destination. Its core principle — see the result where you make the change — is the same principle behind the front-end editing mode that four experienced participants raised unprompted as the platform's biggest gap. Validating the in-context preview at the scale of one setting de-risks the argument for it at the scale of the whole editor: it proves the interaction model works for Adapt's users before the team commits to the far larger build. The spacing work is the smallest shippable proof of the direction the platform needs to move."
     }
   },
   decisions: [
@@ -516,19 +491,19 @@ export const adaptCaseStudy: AdaptCaseStudy = {
       decision: "Add a live preview panel in the Theming settings view",
       rationale:
         "Kills the apply → preview → return → adjust loop participants demonstrated repeatedly across every session.",
-      evidence: "Observed pattern across all 6 usability sessions; principle articulated by Winston"
+      evidence: "Observed pattern across all 6 usability sessions; principle articulated by a returning Phase 1 participant (U4)"
     },
     {
       decision: "Use relational labels with pixel tooltips (\"Standard = 24px\")",
       rationale:
         "\"Standard / Half / Double / Remove\" is well understood by participants; pixel context bridges abstract → visual intent for power users.",
-      evidence: "Keerthana explicitly requested a reference table during the session"
+      evidence: "One tester (U8) explicitly requested a reference table during the session"
     },
     {
       decision: "Apply the new padding system to new courses only by default",
       rationale:
         "Protects legacy work. An opt-in migration path prevents silent breakage of existing courses already mixing old and new spacing.",
-      evidence: "David Pedersen: \"I might have to redo my old paddings… they already have a lot of this mix of the old way.\""
+      evidence: "Tester U5: \"I might have to redo my old paddings… they already have a lot of this mix of the old way.\""
     }
   ],
   roadmap: [
@@ -537,7 +512,6 @@ export const adaptCaseStudy: AdaptCaseStudy = {
       status: "Foundational",
       body: "This came from the research findings which later led to Adapt Studio — it was the foundation for building Adapt as Adapt Studio (AI smart authoring tool).",
       designSolution: "Prioritised front-end / WYSIWYG editing as the north-star fix for the back-end-to-preview disconnect surfaced across discovery and usability testing, rather than another incremental patch to the back-end-first editor.",
-      designSolutionLink: "https://www.figma.com/design/2S0CUIL8N2NBeLRxx2gIA3/WYSIWYG?node-id=0-1&t=l9iSs8r4lRct1wFJ-1",
       decision: "Build the next generation of Adapt around live, in-context editing instead of retrofitting preview onto the existing structure — this became the founding principle of Adapt Studio.",
       impact: "Became the foundation for Adapt Studio, the AI-powered authoring tool now being built around this principle."
     },
@@ -546,7 +520,6 @@ export const adaptCaseStudy: AdaptCaseStudy = {
       status: "Completed",
       body: "The pain point is users have to use different URLs manually to log in to different instances. The SSO login dashboard flow provides a solution to launch instances from a single dashboard.",
       designSolution: "A single SSO login dashboard listing every instance a user has access to, replacing manually-typed, instance-specific URLs.",
-      designSolutionLink: "https://www.figma.com/design/GtewAtFAmKDSjnCurzdFaD/SSO-Login?node-id=1-225&t=1o3NfZpXgIv4hZmJ-1",
       decision: "Centralise authentication behind one dashboard rather than maintaining separate login flows per instance.",
       impact: "Users launch any instance from a single sign-on, removing the manual URL-switching step entirely."
     },
@@ -555,7 +528,6 @@ export const adaptCaseStudy: AdaptCaseStudy = {
       status: "Completed",
       body: "Users had the pain point that they only had the option to set padding for a block — for Page, Article, and Component they had to add CSS for padding. Adding padding functionality to Adapt settings provides an easy way to set global paddings for Page, Article, Block, and Component, which also brings more consistency.",
       designSolution: "Prototyped and usability-tested two padding models — Approach A (block top + block bottom) vs Approach B (block top + component top) — rather than shipping a guess.",
-      designSolutionLink: "https://www.figma.com/design/5c0Td0diIDiF3NN4en0Ngo/Adapt-Padding?node-id=0-1&t=EC5DKnjZcgGIPZBB-1",
       decision: "Adopted Approach B, with a live preview panel and relational labels, validated by 4 of 6 usability testers.",
       impact: "First design decision shipped through structured validation rather than internal debate — setting a precedent for evidence-led development on the Adapt team."
     },
@@ -564,7 +536,6 @@ export const adaptCaseStudy: AdaptCaseStudy = {
       status: "Completed",
       body: "The pain point is the custom theme has a lot of options and there is no live preview after changing or setting up — users have to trigger preview to see the changes. The new custom theme has a lot of automation and fewer options, which reduces not only cognitive load for users but also, with LIVE preview, helps them see how the changes impact the course design.",
       designSolution: "A rebuilt custom theme experience with fewer, more automated options and an always-on live preview pane beside the controls.",
-      designSolutionLink: "https://www.figma.com/design/Y9S390oLndMcnmXXhZqjci/Custom-Theme?node-id=0-1&t=eS95OdDwGAaFusst-1",
       decision: "Trade raw option-count for automation, and replace the manual preview trigger with a live preview.",
       impact: "Reduced cognitive load for theme setup and lets users see the effect of a change on the course instantly."
     },
@@ -573,7 +544,6 @@ export const adaptCaseStudy: AdaptCaseStudy = {
       status: "Completed",
       body: "Lots of options and a less intuitive UI. The new Translation UI is more intuitive and has a wizard along with AI functionality for translating the course.",
       designSolution: "A wizard-driven translation flow with AI-assisted translation, replacing the dense, options-first UI.",
-      designSolutionLink: "https://www.figma.com/design/FSM8jnIkpRuQQHdSrfGb8a/Adapt-Translation?node-id=0-1&t=6lELDaqejI3MHHYj-1",
       decision: "Guide translation step-by-step instead of exposing every setting at once, and let AI handle the first-pass translation.",
       impact: "A more intuitive, faster path to translating a course into additional languages."
     },
@@ -582,7 +552,6 @@ export const adaptCaseStudy: AdaptCaseStudy = {
       status: "Completed",
       body: "Improved Course menu to improve the usability and intuitiveness.",
       designSolution: "Reworked course menu structure and interactions for clearer wayfinding.",
-      designSolutionLink: "https://www.figma.com/design/dSk1k8wzVo2ANTTSLMige6/Course-Menu?node-id=0-1&t=4GZDjAEdHVDPIb4N-1",
       decision: "Prioritise usability and intuitiveness over preserving the existing menu layout.",
       impact: "Improved usability and findability when navigating course structure."
     },
@@ -591,10 +560,6 @@ export const adaptCaseStudy: AdaptCaseStudy = {
       status: "On-going",
       body: "Adapt Studio is planned from Tirtile 1 (Jan 2026), bringing a new look and feel with overall improvement in user experience, and updates two flows for course creation — build from scratch and build with AI — with an improved course dashboard and AI assistant.",
       designSolution: "A new look and feel with two course-creation flows — build from scratch and build with AI — plus an improved dashboard and AI assistant, carrying the WYSIWYG foundation into production. Took the initiative to code the design directly in VS Code with Claude, producing a fully functional frontend the dev team can use as-is and integrate straight into the existing backend — cutting the overall turnaround time. Figma Make was used alongside this to produce design prototypes for the product team to validate the direction before it's built.",
-      designSolutionLinks: [
-        { label: "Figma Make prototype", href: "https://www.figma.com/make/OcnxOiWjFgK9nbaYqEVa2h/Adapt-Studio?fullscreen=1&t=EOFjAzWrNfyPfp7q-1&code-node-id=0-9" },
-        { label: "Figma design", href: "https://www.figma.com/design/7SfrkHQ02JIyIGhQxEJ09C/Adapt-Studio?node-id=0-1&t=SlQvMWyFKVlGhDJk-1" }
-      ],
       decision: "Consolidate the future authoring experience into a single product, Adapt Studio, launching from Tirtile 1 (Jan 2026) — designed and coded in parallel, with Figma Make prototypes used to validate direction with the product team before dev handoff.",
       impact: "Expected to lift the overall course-creation experience once live. Coding the frontend directly reduces dev turnaround time by handing over functional, integration-ready code instead of static designs — the vehicle bringing the earlier research findings to market."
     }
@@ -603,8 +568,8 @@ export const adaptCaseStudy: AdaptCaseStudy = {
     delivered: [
       "First evidence-grounded user picture in five years. The five personas now anchor design reviews, sprint planning, and stakeholder communication on the Adapt product team.",
       "First design decision shipped through structured validation. The global padding redesign was approved for development based on usability evidence rather than internal debate — setting a precedent.",
-      "Prioritisation language shift. Discussions about what to build next now reference participants by name and findings by number. The roadmap above is in active use.",
-      "Documented retention risk. The Articulate Rise 360 comparison — raised unprompted by four senior internal voices — is now visible to product leadership as a strategic signal, not an offhand grumble."
+      "Prioritisation language shift. Discussions about what to build next now reference participants by ID and findings by number. The roadmap above is in active use.",
+      "Documented retention risk. The Articulate Rise 360 comparison — raised unprompted by four experienced participants — is now visible to product leadership as a strategic signal, not an offhand grumble."
     ],
     unmeasured:
       "Course delivery cycle time after the front-end editor ships, framework-update-related incident rate after impact-preview ships, informal abandonment signals (Rise 360 mentions) six months from now. A scoped Phase 3 follow-up will close the loop."
@@ -616,11 +581,11 @@ export const adaptCaseStudy: AdaptCaseStudy = {
     },
     {
       heading: "What surprised me",
-      body: "The Articulate Rise 360 comparison. I went in expecting a feature gripe list; I came out with a competitive retention risk no one on the product team had explicitly named. The same comparison, repeated by four senior voices in different countries, was the most strategically significant data point in the entire study — and it would not have surfaced in a survey."
+      body: "The Articulate Rise 360 comparison. I went in expecting a feature gripe list; I came out with a competitive retention risk no one on the product team had explicitly named. The same comparison, repeated by four experienced participants in different countries, was the most strategically significant data point in the entire study — and it would not have surfaced in a survey."
     },
     {
       heading: "What I learned about the people, not the tool",
-      body: "Every participant cared deeply about the courses they were building. The Visual Storyteller wanted Adapt to be beautiful because she was proud of her work. The Production Architect wanted updates to be safe because he had championed the platform. The Mission-Driven SME wanted simpler help because her courses reached rural India. The friction in the tool was friction between people and their mission. Reframing the work that way — as removing obstacles from a mission, not as fixing a UI — is what I'd bring to the next study."
+      body: "Every participant cared deeply about the courses they were building. The Visual Storyteller wanted Adapt to be beautiful because she was proud of her work. The Production Architect wanted updates to be safe because they had championed the platform. The Mission-Driven SME wanted simpler help because her courses reached rural India. The friction in the tool was friction between people and their mission. Reframing the work that way — as removing obstacles from a mission, not as fixing a UI — is what I'd bring to the next study."
     },
     {
       heading: "Where this goes next",

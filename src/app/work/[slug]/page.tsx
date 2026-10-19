@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { ArrowLeft, Calendar, Clock, ExternalLink, UserRound } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Navigation } from "@/components/navigation";
 import { BlockList } from "@/lib/blocks/block-list";
 import { StickyToc } from "@/components/case-study/sticky-toc";
@@ -59,13 +60,15 @@ export default async function CaseStudyPage({ params }: Params) {
 
   if (!blocks && !study) notFound();
 
+  const isAdapt = slug === "adapt-authoring-tool";
+
   return (
     <>
       <Navigation />
       <main id="main" className="pt-20">
         {study && (
           <>
-            <section className="relative overflow-hidden border-b border-white/10 py-16">
+            <section className="relative overflow-hidden border-b border-hairline/10 py-16">
               <div className="absolute inset-0 bg-radial-field opacity-70 blur-2xl" aria-hidden="true" />
               <div className="container relative">
                 <Button asChild variant="ghost" className="mb-8">
@@ -85,7 +88,7 @@ export default async function CaseStudyPage({ params }: Params) {
                       ))}
                     </div>
                   </div>
-                  <div className="relative aspect-[1.35] overflow-hidden rounded-xl border border-white/10 bg-surface shadow-glow">
+                  <div className="relative aspect-[1.35] overflow-hidden rounded-xl border border-hairline/10 bg-surface shadow-glow">
                     <Image src={study.cover} alt="" fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                   </div>
@@ -93,7 +96,7 @@ export default async function CaseStudyPage({ params }: Params) {
               </div>
             </section>
 
-            <section className="border-b border-white/10 py-8">
+            <section className="border-b border-hairline/10 py-8">
               <div className="container grid gap-3 md:grid-cols-4">
                 {[
                   { icon: UserRound, label: "Role", value: study.role },
@@ -116,18 +119,16 @@ export default async function CaseStudyPage({ params }: Params) {
         )}
 
         {blocks ? (
-          slug === "adapt-authoring-tool" ? (
-            <div className="container py-8 xl:grid xl:grid-cols-[260px_1fr] xl:gap-12 xl:items-start">
+          <div className={cn("container py-8", isAdapt && "xl:grid xl:grid-cols-[260px_1fr] xl:gap-12 xl:items-start")}>
+            {isAdapt ? (
               <div className="xl:sticky xl:top-28 xl:self-start">
                 <StickyToc items={adaptCaseStudy.toc} />
               </div>
-              <div className="min-w-0">
-                <BlockList blocks={blocks} />
-              </div>
+            ) : null}
+            <div className="min-w-0">
+              <BlockList blocks={blocks} />
             </div>
-          ) : (
-            <BlockList blocks={blocks} />
-          )
+          </div>
         ) : study ? (
           <section className="py-16">
             <div className="container grid gap-10 lg:grid-cols-[0.72fr_1.28fr]">
@@ -137,7 +138,10 @@ export default async function CaseStudyPage({ params }: Params) {
                   <div className="mt-5 grid gap-3">
                     {study.metrics.map((metric) => (
                       <div key={metric.label} className="rounded-lg bg-background/[0.55] p-4">
-                        <div className="text-3xl font-semibold" style={{ color: study.accent }}>
+                        <div
+                          className="text-study-accent text-3xl font-semibold"
+                          style={{ "--study-accent": study.accent } as React.CSSProperties}
+                        >
                           {metric.value}
                         </div>
                         <div className="mt-2 text-sm font-semibold">{metric.label}</div>

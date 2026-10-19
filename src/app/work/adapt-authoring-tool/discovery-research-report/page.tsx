@@ -188,20 +188,24 @@ export default function DiscoveryResearchReportPage() {
                 </div>
               </article>
 
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                <span>
-                  Source:{" "}
-                  <a
-                    href={doc.source}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline decoration-white/20 underline-offset-4 hover:text-foreground"
-                  >
-                    {doc.source}
-                  </a>
-                </span>
-              </div>
+              {doc.consentNote && <p className="text-xs leading-6 text-muted-foreground">{doc.consentNote}</p>}
+
+              {doc.source && (
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                  <span>
+                    Source:{" "}
+                    <a
+                      href={doc.source}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline decoration-white/20 underline-offset-4 hover:text-foreground"
+                    >
+                      {doc.source}
+                    </a>
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>

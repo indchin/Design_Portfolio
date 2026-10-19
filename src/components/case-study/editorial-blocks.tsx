@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Calendar, FileText, MapPin, ScanSearch, Users, Video } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Calendar, ChevronDown, FileText, MapPin, ScanSearch, Users, Video } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 export { PersonaGrid } from "@/components/case-study/persona-grid";
 import { ArtifactGallery } from "@/components/case-study/artifact-gallery";
 import type {
@@ -27,7 +28,8 @@ export function SectionShell({
   title,
   intro,
   children,
-  bordered = true
+  bordered = true,
+  align = "center"
 }: {
   id?: string;
   eyebrow?: string;
@@ -35,26 +37,38 @@ export function SectionShell({
   intro?: string;
   children: React.ReactNode;
   bordered?: boolean;
+  /** "left" is opt-in (NRP page): header shares the left edge of the content, tighter rhythm. Default keeps other studies unchanged. */
+  align?: "center" | "left";
 }) {
+  const left = align === "left";
   return (
     <section
       id={id}
-      className={`scroll-mt-24 py-16 sm:py-20 md:py-28 ${bordered ? "border-t border-white/[0.06]" : ""}`}
+      className={cn(
+        left ? "scroll-mt-4 py-14 md:py-20" : "scroll-mt-24 py-16 sm:py-20 md:py-28",
+        bordered && "border-t border-hairline/[0.06]"
+      )}
     >
       {(eyebrow || title || intro) && (
-        <header className="mx-auto mb-10 max-w-2xl px-4 text-center sm:mb-12 sm:px-0 md:mb-16">
+        <header className={cn(left ? "mb-8 max-w-3xl md:mb-10" : "mx-auto mb-10 max-w-2xl px-4 text-center sm:mb-12 sm:px-0 md:mb-16")}>
           {eyebrow ? (
-            <div className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-primary/80 sm:text-xs">
+            <div className={left ? "nrp-label nrp-label-primary mb-3" : "mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs"}>
               {eyebrow}
             </div>
           ) : null}
           {title ? (
-            <h2 className="text-balance font-display text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
+            <h2
+              tabIndex={-1}
+              className={cn(
+                "text-balance font-display font-semibold tracking-tight focus-visible:outline-none",
+                left ? "text-[28px] leading-8 sm:text-[32px] sm:leading-9 md:text-4xl md:leading-10" : "text-2xl sm:text-3xl md:text-4xl"
+              )}
+            >
               {title}
             </h2>
           ) : null}
           {intro ? (
-            <p className="mt-4 text-sm leading-7 text-muted-foreground sm:mt-5 sm:text-base sm:leading-8 md:text-lg">
+            <p className={cn("text-muted-foreground", left ? "mt-4 max-w-[65ch] text-base leading-7" : "mt-4 text-sm leading-7 sm:mt-5 sm:text-base sm:leading-8 md:text-lg")}>
               {intro}
             </p>
           ) : null}
@@ -75,7 +89,7 @@ export function EditorialHero({ meta }: { meta: AdaptCaseStudy["meta"] }) {
   return (
     <section className="relative overflow-hidden pb-12 pt-28 md:pb-16 md:pt-40">
       <div className="absolute inset-0 bg-radial-field opacity-60 blur-3xl" aria-hidden="true" />
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" aria-hidden="true" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-hairline/15 to-transparent" aria-hidden="true" />
       <div className="container relative">
         <Button asChild variant="ghost" className="mb-8 md:mb-10">
           <Link href="/#work">
@@ -88,15 +102,15 @@ export function EditorialHero({ meta }: { meta: AdaptCaseStudy["meta"] }) {
             <Badge>Case Study</Badge>
             <Badge>EdTech · User Research</Badge>
           </div>
-          <h1 className="mt-6 text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl md:mt-8 md:text-5xl lg:text-6xl">
+          <p className="mt-6 text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl md:mt-8 md:text-5xl lg:text-6xl">
             {meta.title}
-          </h1>
+          </p>
           <p className="mt-5 text-balance text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8 md:mt-6 md:text-xl">
             {meta.tagline}
           </p>
         </div>
 
-        <dl className="mx-auto mt-12 grid max-w-4xl gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] text-sm sm:grid-cols-2 md:mt-16 lg:grid-cols-4">
+        <dl className="mx-auto mt-12 grid max-w-4xl gap-px overflow-hidden rounded-2xl border border-hairline/[0.06] bg-fill-subtle/[0.02] text-sm sm:grid-cols-2 md:mt-16 lg:grid-cols-4">
           {[
             { icon: Users, label: "Role", value: meta.role },
             { icon: Calendar, label: "Timeline", value: meta.timeline },
@@ -136,10 +150,10 @@ export function ProblemBlock({ problem }: { problem: AdaptCaseStudy["problem"] }
     { label: "Why it mattered", body: problem.stakes }
   ];
   return (
-    <div className="mx-auto grid max-w-5xl gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] md:grid-cols-3">
+    <div className="mx-auto grid max-w-5xl gap-px overflow-hidden rounded-2xl border border-hairline/[0.06] bg-fill-subtle/[0.02] md:grid-cols-3">
       {items.map((item) => (
         <article key={item.label} className="bg-background/40 p-7">
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/80">
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
             {item.label}
           </div>
           <p className="mt-4 text-sm leading-7 text-muted-foreground">{item.body}</p>
@@ -155,7 +169,7 @@ export function GoalsList({ goals }: { goals: string[] }) {
       {goals.map((goal, i) => (
         <li
           key={i}
-          className="flex gap-5 rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 text-sm leading-7 text-muted-foreground"
+          className="flex gap-5 rounded-xl border border-hairline/[0.06] bg-fill-subtle/[0.02] p-5 text-sm leading-7 text-muted-foreground"
         >
           <span className="shrink-0 font-display text-2xl font-semibold leading-none text-primary/80">
             {String(i + 1).padStart(2, "0")}
@@ -190,7 +204,7 @@ function ResearchArtifactRow({
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-foreground/90">{artifact.label}</span>
           {!available && (
-            <span className="rounded-full border border-white/[0.08] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.1em] text-muted-foreground">
+            <span className="rounded-full border border-hairline/[0.08] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.1em] text-muted-foreground">
               Coming soon
             </span>
           )}
@@ -209,7 +223,7 @@ function ResearchArtifactRow({
         href={artifact.href!}
         target="_blank"
         rel="noopener noreferrer"
-        className="group flex items-start gap-3 rounded-lg p-3 transition hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        className="group flex items-start gap-3 rounded-lg p-3 transition hover:bg-fill-subtle/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
         {content}
       </Link>
@@ -245,7 +259,7 @@ function MultiLinkArtifactRow({
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-2 rounded-md py-1.5 pr-2 text-xs text-foreground/80 transition hover:bg-white/[0.04] hover:text-foreground"
+            className="group flex items-center gap-2 rounded-md py-1.5 pr-2 text-xs text-foreground/80 transition hover:bg-fill-subtle/[0.04] hover:text-foreground"
           >
             <span className="min-w-0 flex-1 truncate">{link.label}</span>
             <ArrowUpRight className="h-3 w-3 shrink-0 text-primary/70 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
@@ -258,13 +272,15 @@ function MultiLinkArtifactRow({
 
 function PhaseResearchPanel({ research }: { research: PhaseResearch }) {
   return (
-    <div className="border-t border-white/[0.06] bg-white/[0.015] p-3">
+    <div className="border-t border-hairline/[0.06] bg-fill-subtle/[0.015] p-3">
       <div className="px-2 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
         Research artifacts
       </div>
-      <div className="divide-y divide-white/[0.04]">
+      <div className="divide-y divide-hairline/[0.04]">
         {(Object.keys(researchArtifactIcons) as (keyof PhaseResearch)[]).map((kind) => {
           const artifact = research[kind];
+          // Skip artifacts withheld from publication (no items, links or href)
+          if (!artifact.href && !artifact.items?.length && !artifact.links?.length) return null;
           if (artifact.items && artifact.items.length > 0) {
             return <ArtifactGallery key={kind} artifact={artifact} icon={researchArtifactIcons[kind]} />;
           }
@@ -293,16 +309,16 @@ export function MethodPanel({
       {panels.map((panel) => (
         <article
           key={panel.title}
-          className="overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02]"
+          className="overflow-hidden rounded-2xl border border-hairline/[0.06] bg-fill-subtle/[0.02]"
         >
-          <header className="border-b border-white/[0.06] bg-white/[0.02] p-6">
-            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/80">
+          <header className="border-b border-hairline/[0.06] bg-fill-subtle/[0.02] p-6">
+            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
               {panel.tag}
             </div>
             <h3 className="mt-3 font-display text-xl font-semibold">{panel.title}</h3>
             <p className="mt-1 text-xs text-muted-foreground">{panel.subtitle}</p>
           </header>
-          <dl className="divide-y divide-white/[0.05]">
+          <dl className="divide-y divide-hairline/[0.05]">
             {panel.items.map((item) => (
               <div key={item.label} className="grid grid-cols-[110px_1fr] gap-4 p-5">
                 <dt className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
@@ -326,7 +342,7 @@ export function FindingList({ findings }: { findings: Finding[] }) {
       {findings.map((f) => (
         <article
           key={f.id}
-          className="grid gap-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-7 md:grid-cols-[80px_1fr] md:p-9"
+          className="grid gap-6 rounded-2xl border border-hairline/[0.06] bg-fill-subtle/[0.02] p-7 md:grid-cols-[80px_1fr] md:p-9"
         >
           <div className="font-display text-5xl font-semibold leading-none text-primary/70">
             {f.number}
@@ -360,7 +376,7 @@ export function FindingList({ findings }: { findings: Finding[] }) {
 
 export function Figure({ figure }: { figure: FigureData }) {
   return (
-    <figure className="overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02]">
+    <figure className="overflow-hidden rounded-2xl border border-hairline/[0.06] bg-fill-subtle/[0.02]">
       <div className="relative w-full">
         {figure.src ? (
           <Image
@@ -372,13 +388,13 @@ export function Figure({ figure }: { figure: FigureData }) {
             className="h-auto w-full object-contain"
           />
         ) : (
-          <div className="flex h-24 w-full items-center justify-center bg-white/[0.04] text-xs text-muted-foreground">
+          <div className="flex h-24 w-full items-center justify-center bg-fill-subtle/[0.04] text-xs text-muted-foreground">
             No image — click to edit
           </div>
         )}
       </div>
       {figure.caption ? (
-        <figcaption className="border-t border-white/[0.06] px-5 py-3 text-xs leading-5 text-muted-foreground">
+        <figcaption className="border-t border-hairline/[0.06] px-5 py-3 text-xs leading-5 text-muted-foreground">
           {figure.caption}
         </figcaption>
       ) : null}
@@ -406,7 +422,7 @@ export function DesignSolutionBlock({ solution }: { solution: DesignSolution }) 
 
       {/* A/B comparison */}
       <div>
-        <p className="mx-auto mb-7 max-w-3xl rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 text-sm leading-7 text-muted-foreground">
+        <p className="mx-auto mb-7 max-w-3xl rounded-xl border border-hairline/[0.06] bg-fill-subtle/[0.02] p-6 text-sm leading-7 text-muted-foreground">
           {solution.comparison.problemStatement}
         </p>
         <div className="grid gap-5 md:grid-cols-2">
@@ -418,18 +434,18 @@ export function DesignSolutionBlock({ solution }: { solution: DesignSolution }) 
                 className={`flex flex-col rounded-2xl border p-7 ${
                   chosen
                     ? "border-emerald-300/30 bg-emerald-400/[0.05]"
-                    : "border-white/[0.06] bg-white/[0.02]"
+                    : "border-hairline/[0.06] bg-fill-subtle/[0.02]"
                 }`}
               >
                 <div className="flex items-center justify-between gap-3">
-                  <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/80">
+                  <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
                     {opt.label}
                   </div>
                   <span
                     className={`inline-flex rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] ${
                       chosen
                         ? "border-emerald-300/30 bg-emerald-400/15 text-emerald-200"
-                        : "border-white/15 bg-white/[0.06] text-muted-foreground"
+                        : "border-hairline/15 bg-fill-subtle/[0.06] text-muted-foreground"
                     }`}
                   >
                     {chosen ? "Chosen" : "Rejected"}
@@ -464,12 +480,12 @@ export function DesignSolutionBlock({ solution }: { solution: DesignSolution }) 
         {solution.moves.map((move) => (
           <article
             key={move.title}
-            className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-7"
+            className="rounded-2xl border border-hairline/[0.06] bg-fill-subtle/[0.02] p-7"
           >
             <h3 className="font-display text-lg font-semibold tracking-tight md:text-xl">
               {move.title}
             </h3>
-            <div className="mt-5 grid gap-px overflow-hidden rounded-xl border border-white/[0.06] sm:grid-cols-2">
+            <div className="mt-5 grid gap-px overflow-hidden rounded-xl border border-hairline/[0.06] sm:grid-cols-2">
               <div className="bg-background/40 p-5">
                 <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                   Before
@@ -523,7 +539,7 @@ export function AccessibilityBlock({ accessibility }: { accessibility: Accessibi
         {accessibility.considerations.map((item) => (
           <article
             key={item.title}
-            className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-7"
+            className="rounded-2xl border border-hairline/[0.06] bg-fill-subtle/[0.02] p-7"
           >
             <h3 className="font-display text-lg font-semibold tracking-tight">{item.title}</h3>
             <p className="mt-4 text-sm leading-7 text-muted-foreground">{item.body}</p>
@@ -542,9 +558,9 @@ export function AccessibilityBlock({ accessibility }: { accessibility: Accessibi
 
 export function DecisionTable({ decisions }: { decisions: Decision[] }) {
   return (
-    <div className="mx-auto max-w-5xl overflow-x-auto rounded-2xl border border-white/[0.06]">
+    <div className="mx-auto max-w-5xl overflow-x-auto rounded-2xl border border-hairline/[0.06]">
       <table className="w-full min-w-[640px] text-left text-sm">
-        <thead className="bg-white/[0.04]">
+        <thead className="bg-fill-subtle/[0.04]">
           <tr>
             <th scope="col" className="w-[34%] p-5 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
               Decision
@@ -559,7 +575,7 @@ export function DecisionTable({ decisions }: { decisions: Decision[] }) {
         </thead>
         <tbody>
           {decisions.map((d, i) => (
-            <tr key={i} className="border-t border-white/[0.05] bg-white/[0.015] align-top">
+            <tr key={i} className="border-t border-hairline/[0.05] bg-fill-subtle/[0.015] align-top">
               <td className="p-5 font-medium leading-6 text-foreground">{d.decision}</td>
               <td className="p-5 leading-6 text-muted-foreground">{d.rationale}</td>
               <td className="p-5 text-xs leading-6 text-muted-foreground">{d.evidence}</td>
@@ -583,7 +599,7 @@ export function RoadmapTable({ items }: { items: RoadmapItem[] }) {
       {items.map((item, i) => (
         <article
           key={i}
-          className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-7"
+          className="rounded-2xl border border-hairline/[0.06] bg-fill-subtle/[0.02] p-6 sm:p-7"
         >
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h3 className="font-display text-lg font-semibold tracking-tight text-foreground">
@@ -641,7 +657,7 @@ export function RoadmapWithProcess({
         return (
           <article
             key={i}
-            className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-7"
+            className="rounded-2xl border border-hairline/[0.06] bg-fill-subtle/[0.02] p-6 sm:p-7"
           >
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h3 className="font-display text-lg font-semibold tracking-tight text-foreground">
@@ -659,7 +675,7 @@ export function RoadmapWithProcess({
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 {item.decision && (
                   <RoadmapProcessSection id={`${base}-decision`} label="Decision">
-                    <div className="flex h-full gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] p-5">
+                    <div className="flex h-full gap-3 rounded-xl border border-hairline/[0.08] bg-fill-subtle/[0.03] p-5">
                       <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                       <p className="text-sm leading-7 text-foreground/90">{item.decision}</p>
                     </div>
@@ -679,12 +695,16 @@ export function RoadmapWithProcess({
 
             {(item.designSolution || isRich) && (
               <details className="group mt-5 rounded-xl border border-primary/15 bg-primary/[0.03] open:pb-7">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 p-4 text-sm font-medium text-primary/90 transition hover:text-primary [&::-webkit-details-marker]:hidden">
-                  <span className="inline-flex items-center gap-1.5">
+                <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-4 py-2 text-base font-medium text-primary/90 transition hover:text-primary [&::-webkit-details-marker]:hidden">
+                  <span className="inline-flex items-center gap-1">
                     Design solution
-                    <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                    <span aria-hidden="true" className="inline-flex h-11 w-11 items-center justify-center">
+                      <ArrowUpRight className="h-6 w-6" />
+                    </span>
                   </span>
-                  <span className="text-xs text-primary/60 transition group-open:rotate-180">▾</span>
+                  <span aria-hidden="true" className="inline-flex h-11 w-11 items-center justify-center text-primary/70 transition group-open:rotate-180">
+                    <ChevronDown className="h-6 w-6" />
+                  </span>
                 </summary>
 
                 <div id={`${base}-design-solution`} className="scroll-mt-24 space-y-8 border-t border-primary/10 px-5 pt-6 sm:px-2">
@@ -744,8 +764,8 @@ export function RoadmapWithProcess({
 export function ImpactBlock({ impact }: { impact: AdaptCaseStudy["impact"] }) {
   return (
     <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[1.4fr_1fr]">
-      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-8">
-        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/80">
+      <div className="rounded-2xl border border-hairline/[0.06] bg-fill-subtle/[0.02] p-8">
+        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
           What this work changed
         </div>
         <ul className="mt-6 grid gap-5">
@@ -773,7 +793,7 @@ export function ReflectionList({ items }: { items: ReflectionItem[] }) {
       {items.map((item) => (
         <article
           key={item.heading}
-          className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-7"
+          className="rounded-2xl border border-hairline/[0.06] bg-fill-subtle/[0.02] p-7"
         >
           <h3 className="font-display text-lg font-semibold tracking-tight">{item.heading}</h3>
           <p className="mt-4 text-sm leading-7 text-muted-foreground">{item.body}</p>
@@ -798,9 +818,45 @@ export function PullQuote({ children, attribution }: { children: React.ReactNode
   );
 }
 
-export function CaseStudyFooter() {
+/** Optional next-case-study block (used by the NRP page). Other case studies keep the generic footer. */
+export type NextStudy = {
+  title: string;
+  description: string;
+  href: string;
+  resume: { href: string; label: string };
+};
+
+export function CaseStudyFooter({ next }: { next?: NextStudy }) {
+  if (next) {
+    return (
+      <section className="border-t border-hairline/[0.06] py-20">
+        <div className="container">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="font-display text-2xl font-semibold tracking-tight md:text-3xl">Next: {next.title}</h2>
+            <p className="mt-4 text-sm leading-7 text-muted-foreground">{next.description}</p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Button asChild>
+                <Link href={next.href}>
+                  Read the next case study
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+              </Button>
+              <Button asChild variant="secondary">
+                <a href={next.resume.href} download>
+                  {next.resume.label}
+                </a>
+              </Button>
+              <Button asChild variant="ghost">
+                <Link href="/#contact">Get in touch</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
-    <section className="border-t border-white/[0.06] py-20">
+    <section className="border-t border-hairline/[0.06] py-20">
       <div className="container">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-display text-2xl font-semibold tracking-tight md:text-3xl">

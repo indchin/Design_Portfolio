@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { requireAdmin } from "@/lib/require-admin";
 import { revalidatePage } from "@/lib/revalidate";
 
 type Params = { params: Promise<{ id: string }> };
 
 export async function POST(_req: NextRequest, { params }: Params) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   const { id } = await params;
   const { isSupabaseAdminConfigured, supabaseAdmin } = await import("@/lib/supabase-admin");
 

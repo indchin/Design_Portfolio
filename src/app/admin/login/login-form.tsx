@@ -16,7 +16,7 @@ export function LoginForm({ next }: { next?: string }) {
     const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next ?? "/admin")}`;
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: redirectTo }
+      options: { emailRedirectTo: redirectTo, shouldCreateUser: false }
     });
     setStatus(error ? "error" : "sent");
   }

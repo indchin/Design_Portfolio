@@ -8,3 +8,18 @@ dist
 .vercel
 .netlify
 secrets
+
+# portfolio review team
+.claude/team/screenshots
+*.tsbuildinfo
+.DS_Store
+next-env.d.ts
+.claude/monitor/events.jsonl
+
+# secrets
+.env*
+!.env.example
+*.bak
+*.pem
+*.key
+.claude/settings.local.json

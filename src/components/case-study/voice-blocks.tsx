@@ -482,7 +482,7 @@ export function ShowcaseSection() {
     },
     {
       label: "Voice Expert (VE) — Endpoint Management",
-      description: "Active endpoint list with per-endpoint cost indicator ($4/hr), activate/suspend controls, and usage timestamp"
+      description: "Active endpoint list with per-endpoint cost indicator, activate/suspend controls, and usage timestamp"
     },
     {
       label: "User Flow — Voice Request Journey",

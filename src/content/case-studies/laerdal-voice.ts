@@ -140,7 +140,7 @@ export const voiceCaseStudy: VoiceCaseStudy = {
   tension: [
     "Voice isn't a feature inside a clinical simulation. It's the experience. A simulated patient who sounds wrong — wrong pronunciation, wrong emotion, wrong latency — breaks the suspension of disbelief that makes simulation work as learning. For Laerdal, voice is strategic infrastructure for products that train millions of clinicians.",
     "But voice didn't have an owner. Six different product teams — vSim, VR Clinicals, QCPR, Stokes, Adapt, Scenario Cloud — were each independently sourcing, managing, and integrating TTS voices. Same problem solved six different ways. Same voices often re-created. The same medical pronunciation issues debated in six separate threads.",
-    "The cost curve was climbing — Azure endpoint fees, engineering bottlenecks, slow onboarding for every new product. And the strategic prize — AI-driven conversational simulation across the entire portfolio — was locked behind that fragmentation.",
+    "The cost curve was climbing — usage-based endpoint fees, engineering bottlenecks, slow onboarding for every new product. And the strategic prize — AI-driven conversational simulation across the entire portfolio — was locked behind that fragmentation.",
     "I joined as Lead UX Designer & Design Researcher to lead the experience and service design of what became the Voice Service Platform (VSP) — Laerdal's centralised voice ecosystem."
   ],
   problem: {
@@ -164,7 +164,7 @@ export const voiceCaseStudy: VoiceCaseStudy = {
       {
         label: "Stakeholder interviews",
         value:
-          "Across Educational Services, vSim, VR Clinicals, QCPR, Adapt, and Scenario Cloud teams — plus Product Owners, Developers, and Voice Service Engineers — mapping current workflows, pain points, and dependencies"
+          "Across Educational Services, vSim, VR Clinicals, QCPR, Adapt, and Scenario Cloud teams — plus Product Owners, Developers, and Voice Service Engineers — mapping current workflows, pain points, and dependencies. Participants gave consent for internal research use; names and identifying detail removed for publication."
       },
       {
         label: "Service blueprint workshops",
@@ -247,10 +247,10 @@ export const voiceCaseStudy: VoiceCaseStudy = {
       id: "azure-custom",
       name: "Custom Voices",
       label: "Custom AI Voice (Microsoft Azure)",
-      cost: "$4 per hour per active endpoint — charged regardless of actual usage",
+      cost: "Usage-based pricing — an active endpoint incurs cost even when idle",
       quality: "High — closely resembles a human voice",
       body:
-        "Custom Voices are AI-generated neural voices built and hosted on Azure. They deliver significantly higher naturalness and clinical credibility — critical for simulation. However, they are expensive: Azure charges $4 per active endpoint URL per hour. This means an open endpoint costs money even when no one is using it. Creating a new Custom Voice is also a tedious, time-consuming process. VSP was designed specifically to manage this cost exposure by centralising endpoint activation and enabling reuse.",
+        "Custom Voices are AI-generated neural voices built and hosted on Azure. They deliver significantly higher naturalness and clinical credibility — critical for simulation. However, they are expensive: Azure uses usage-based pricing per active endpoint. This means an open endpoint costs money even when no one is using it. Creating a new Custom Voice is also a tedious, time-consuming process. VSP was designed specifically to manage this cost exposure by centralising endpoint activation and enabling reuse.",
       tag: "paid"
     }
   ],
@@ -342,7 +342,7 @@ export const voiceCaseStudy: VoiceCaseStudy = {
     steps: [
       { actor: "VSP User", action: "Initiates a modulation or activation request via the platform", note: "Can be an Education Specialist or Product Team member" },
       { actor: "Platform", action: "Routes request to the Request Dashboard", note: "Both Admin and Voice Expert can see pending requests" },
-      { actor: "Voice Expert / Admin", action: "Reviews the request — checks pronunciation, cost implications, duplication", note: "Endpoint activation triggers $4/hr Azure cost" },
+      { actor: "Voice Expert / Admin", action: "Reviews the request — checks pronunciation, cost implications, duplication", note: "Endpoint activation triggers ongoing Azure cost" },
       { actor: "Voice Expert / Admin", action: "Approves or rejects with a mandatory reason field" },
       { actor: "Platform", action: "Sends email notification to the requester (approved or rejected with reason)" },
       { actor: "Platform", action: "Approved: voice appears in library (modulation) or endpoint activated (Custom Voice)", note: "Endpoints can be suspended by Admin/VE when idle to control cost" }
@@ -354,7 +354,7 @@ export const voiceCaseStudy: VoiceCaseStudy = {
       number: "01",
       title: "Voice Modulation",
       tag: "Cost saving",
-      body: "The voice of any voice actor can be modulated by tweaking pitch and speaking rate. The modulated audio is configured and treated as a new version of that voice actor's voice — without activating a new Custom Voice endpoint. This means multiple versions of a voice can exist and be reused, dramatically reducing the frequency of new endpoint activations and the $4/hr cost that comes with them.",
+      body: "The voice of any voice actor can be modulated by tweaking pitch and speaking rate. The modulated audio is configured and treated as a new version of that voice actor's voice — without activating a new Custom Voice endpoint. This means multiple versions of a voice can exist and be reused, dramatically reducing the frequency of new endpoint activations and the usage-based cost that comes with them.",
       visualLabel: "Voice modulation UI",
       visualDescription: "Pitch and speaking rate sliders with real-time audio preview, before/after comparison, and the configuration request submission form"
     },

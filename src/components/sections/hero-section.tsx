@@ -1,18 +1,25 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, Calendar, Download, Sparkles } from "lucide-react";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { ArrowDown, Download, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import type { Portfolio } from "@/types/portfolio";
 
+const proofPoints = [
+  "AAP: moved from a third-party LMS to an owned platform",
+  "6 product teams on one AI voice platform",
+  "17 research participants \u2192 shipped design decisions"
+];
+
 export function HeroSection({ portfolio }: { portfolio: Portfolio }) {
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 0.35], [0, 120]);
-  const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.2]);
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const fade = useTransform(scrollYProgress, [0, 1], [1, 0.7]);
 
   return (
-    <section className="relative min-h-screen overflow-hidden pt-24">
+    <section ref={sectionRef} className="relative min-h-screen overflow-hidden pt-24">
       <div className="subtle-grid absolute inset-0" aria-hidden="true" />
       <motion.div
         aria-hidden="true"
@@ -21,50 +28,49 @@ export function HeroSection({ portfolio }: { portfolio: Portfolio }) {
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
       <div className="container relative flex min-h-[calc(100vh-6rem)] items-center justify-center pb-24">
-        <motion.div style={{ y, opacity }} className="mx-auto max-w-4xl text-center">
-          <Badge className="mb-6 border-primary/30 text-primary">
-            <Sparkles className="mr-2 h-3.5 w-3.5" aria-hidden="true" />
-            {portfolio.owner.experience} designing healthcare, ed-tech, and AI-powered experiences
-          </Badge>
-          <h1 className="text-balance font-display text-4xl font-semibold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
-            {portfolio.owner.name}
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8 md:text-xl">
-            {portfolio.owner.statement}
-          </p>
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.div style={reduceMotion ? undefined : { opacity: fade }}>
+            <h1 className="text-balance font-display text-5xl font-semibold tracking-tight text-foreground md:text-7xl">
+              {portfolio.owner.name}
+            </h1>
+            <p className="mt-4 text-balance text-xl text-foreground md:text-2xl">
+              Lead UX/UI Designer &middot; AI + healthcare EdTech &middot; Bengaluru
+            </p>
+            <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8 md:text-xl">
+              I lead UX for clinical training software used by the American Academy of Pediatrics and the WHO Academy: a
+              learner-record migration, a shared AI voice platform across six product teams, and the first user research
+              on Laerdal&apos;s authoring tool.
+            </p>
+          </motion.div>
           <div className="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
             <Button asChild>
               <a href="#work">
-                View Work
+                View work
                 <ArrowDown className="h-4 w-4" aria-hidden="true" />
               </a>
             </Button>
             <Button asChild variant="secondary">
-              <a href={portfolio.owner.resumeUrl} download>
+              <a href={portfolio.owner.resumeUrl} download="Chinmay-Sharma-UX-Lead-Resume.pdf">
                 <Download className="h-4 w-4" aria-hidden="true" />
-                Download Resume
+                Resume (PDF)
               </a>
             </Button>
-            <Button asChild variant="outline">
-              <a href="#contact">
-                <Calendar className="h-4 w-4" aria-hidden="true" />
-                Contact Me
-              </a>
-            </Button>
+            <a
+              href="#contact"
+              className="focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-lg px-3 text-sm font-semibold text-foreground underline-offset-4 hover:underline"
+            >
+              <Mail className="h-4 w-4" aria-hidden="true" />
+              Contact
+            </a>
           </div>
-          <div className="mx-auto mt-14 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
-            {[
-              ["Healthcare UX", "Mission-critical medical software for global partners"],
-              ["AI Product Design", "Multi-agent workflows and adaptive learning systems"],
-              ["Accessibility", "WCAG 2.1 conformance as a baseline, not a stretch"]
-            ].map(([label, body]) => (
-              <div key={label} className="glass rounded-lg p-4 text-left">
-                <div className="text-sm font-semibold">{label}</div>
-                <div className="mt-2 text-xs leading-5 text-muted-foreground">{body}</div>
+          <div className="mx-auto mt-14 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
+            {proofPoints.map((point) => (
+              <div key={point} className="glass rounded-lg p-4 text-left text-sm font-medium leading-6">
+                {point}
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
